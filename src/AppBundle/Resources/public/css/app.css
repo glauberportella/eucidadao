@@ -1,0 +1,25 @@
+body {
+	font-family: Roboto, sans-serif;
+}
+footer {
+	padding: 30px 0;
+}
+.navbar {
+	margin-bottom: 0;
+}
+.banner {
+	background: transparent url('../images/congresso.jpg') center no-repeat;
+	background-size: cover;
+	min-height: 770px;
+	padding: 30px 0;
+}
+.banner .inscreva { color: #fff; } 
+.banner .inscreva h3 {
+	font-family: Anton, sans-serif;
+	font-size: 40px;
+	text-shadow: 1px 1px 2px #222;
+}
+.banner .inscreva .lead {
+	text-shadow: 1px 1px 2px #222;
+	font-weight: bold;
+}

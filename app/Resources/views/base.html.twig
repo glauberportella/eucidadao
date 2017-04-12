@@ -3,13 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}EuCidadão - Acompanhe a Câmara dos Deputados{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Anton|Roboto:300,400" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/app.css') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -25,7 +27,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Início</a></li>
+                        <li><a href="{{ path('homepage') }}">Início</a></li>
+                        <li><a href="{{ path('about') }}">Como Funciona</a></li>
                         <li><a href="#">Votações</a></li>
                         <li><a href="#">Proposições</a></li>
                         <li><a href="#">Relatórios Eu Cidadão</a></li>
@@ -42,7 +45,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        Feito com <span class="fa fa-hear" style="color: #c00"></span> por Glauber Portella <a href="mailto:glauberportella@gmail.com">glauberportella@gmail.com</a>
+                        Feito com <span class="fa fa-heart" style="color: #c00"></span> por Glauber Portella <a href="mailto:glauberportella@gmail.com">glauberportella@gmail.com</a>
                     </div>
                     <div class="col-md-6 text-right">
                         Ajude <a href="https://github.com/glauberportella/eucidadao" target="_blank">https://github.com/glauberportella/eucidadao</a>
