@@ -1,7 +1,6 @@
 ﻿Versão 1.0
 1 - Administrador
 
-1.1 - Cadastrar projetos em votação na Camara dos Deputados
 1.2 - Disparar a newsletter solicitando posição dos deputados
       Opções: Sim, Não, Abstenção
 1.3 - Disparar relatório das respostas aos e-mails do cidadão cadastrado no sistema
