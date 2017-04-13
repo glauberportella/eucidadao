@@ -23,4 +23,16 @@ class DefaultController extends Controller
     {
         return $this->render('default/about.html.twig', []);
     }
+
+    /**
+     * @Route("/deputados", name="deputados")
+     */
+    public function deputadosAction(Request $request)
+    {
+        $service = $this->container->get('camara_deputado_service');
+        $deputados = $service->obterDeputados();
+        return $this->render('default/deputados.html.twig', [
+            'deputados' => $deputados,
+        ]);
+    }
 }
