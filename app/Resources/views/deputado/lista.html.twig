@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="page-header">
+		  <h1>Deputados</h1>
+		</div>
+
+		<p class="text-justify">Lista dos deputados.</p>
+
+		<div class="well">
+			<h4 style="margin-top: 0; margin-bottom: 15px;">Filtros</h4>
+			{{ form_start(filtroForm, { 'attr': { 'class': 'form-inline' }}) }}
+				{{ form_widget(filtroForm) }}
+			{{ form_end(filtroForm) }}
+		</div>
+
+		<p class="lead text-center">Total: {{ total }} deputados encontrados.</p>
+
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Nome</th>
+					<th>Partido</th>
+					<th>UF</th>
+					<th>Gabinete (anexo - número)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for deputado in deputados %}
+				<tr>
+					<td>
+						<img class="img-responsive deputado-foto" src="{{ deputado.urlFoto }}" alt="">
+					</td>
+					<td>
+						<b>{{ deputado.nome }}</b>
+						<br>Nome Parlamentar: {{ deputado.nomeParlamentar }}
+						<br><em>{{ deputado.condicao }}</em>
+						<br><b>Fone:</b> {{ deputado.fone }}
+						<br><b>E-mail:</b> {{ deputado.email }}
+					</td>
+					<td>{{ deputado.partido }}</td>
+					<td>{{ deputado.uf }}</td>
+					<td>{{ deputado.anexo }} - {{ deputado.gabinete }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
