@@ -3,11 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Cidadao
  *
- * @ORM\Table(name="cidadao")
+ * @UniqueEntity(fields="email", message="Esse e-mail já está registrado no sistema.")
+ * 
+ * @ORM\Table(name="cidadao", uniqueConstraints={@ORM\UniqueConstraint(name="email_idx", columns={"email"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CidadaoRepository")
  */
 class Cidadao
@@ -31,7 +35,9 @@ class Cidadao
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Email(checkMX = true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false, unique=true)
      */
     private $email;
 

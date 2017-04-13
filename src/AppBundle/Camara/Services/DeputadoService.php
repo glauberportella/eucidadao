@@ -16,6 +16,11 @@ class DeputadoService extends CamaraWebService
 	{
 		$deputados = [];
 
+		$cacheDeputados = $this->cache->getItem('camara.deputados');
+		if ($cacheDeputados->isHit()) {
+			return $cacheDeputados->get();
+		}
+
 		$response = $this->client
 			->setUri(self::DEPUTADOS_ENDPOINT.'/ObterDeputados?')
 			->setMethod(Request::METHOD_GET)
@@ -43,6 +48,17 @@ class DeputadoService extends CamaraWebService
 			$deputado->email = $domEl->getElementsByTagName('email')->item(0)->nodeValue;
 			$deputados[] = $deputado;
 		}
+
+		usort($deputados, function(Deputado $a, Deputado $b) {
+			if ($a->nome == $b->nome) {
+				return 0;
+			}
+			return strnatcmp($a->nome, $b->nome);
+		});
+
+		// save to cache
+		$cacheDeputados->set($deputados);
+		$this->cache->save($cacheDeputados);
 
 		return $deputados;
 	}

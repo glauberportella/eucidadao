@@ -73,10 +73,11 @@
 						<img class="img-responsive deputado-foto" src="{{ deputado.urlFoto }}" alt="">
 					</td>
 					<td>
-						{{ deputado.nomeParlamentar }}
+						<b>{{ deputado.nome }}</b>
+						<br>Nome Parlamentar: {{ deputado.nomeParlamentar }}
 						<br><em>{{ deputado.condicao }}</em>
-						<br>Fone: {{ deputado.fone }}
-						<br>E-mail: {{ deputado.email }}
+						<br><b>Fone:</b> {{ deputado.fone }}
+						<br><b>E-mail:</b> {{ deputado.email }}
 					</td>
 					<td>{{ deputado.partido }}</td>
 					<td>{{ deputado.uf }}</td>

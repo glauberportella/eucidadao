@@ -23,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Eu Cidadão</a>
+                    <a class="navbar-brand" href="{{ path('homepage') }}">Eu Cidadão</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,12 +52,20 @@
                     <div class="col-md-6 text-right">
                         Ajude <a href="https://github.com/glauberportella/eucidadao" target="_blank">https://github.com/glauberportella/eucidadao</a>
                     </div>
+                    <div class="col-md-12">
+                        <br>
+                        <p class="text-center">
+                            <a href="{{ path('privacidade') }}">Política de Privacidade</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>
 
-        <script src="{{ asset('bundles/app/js/jquery-1.12.4.min.css') }}"></script>
-        <script src="{{ asset('bundles/app/js/bootstrap.min.css') }}"></script>
+        <script src="{{ asset('bundles/app/js/jquery-1.12.4.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/jquery.mask.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
