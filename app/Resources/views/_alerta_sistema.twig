@@ -1,0 +1,30 @@
+{% if app.session.flashbag.has('error') or app.session.flashbag.has('danger') or app.session.flashbag.has('info') or app.session.flashbag.has('success') %}
+	{% if app.session.flashbag.has('danger') or app.session.flashbag.has('error') %}
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h4 class="panel-title">Problemas encontrados</h4>
+			</div>
+			<div class="panel-body">
+				{% for flash_danger in app.session.flashbag.get('danger') %}
+				    <div class="alert alert-danger" role="alert">
+				        {{ flash_danger }}
+				    </div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	{% for flash_info in app.session.flashbag.get('info') %}
+	    <div class="alert alert-info alert-dismissible" role="alert">
+	    	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        {{ flash_info }}
+	    </div>
+	{% endfor %}
+
+	{% for flash_success in app.session.flashbag.get('success') %}
+	    <div class="alert alert-success alert-dismissible" role="alert">
+	    	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        {{ flash_success }}
+	    </div>
+	{% endfor %}
+{% endif %}

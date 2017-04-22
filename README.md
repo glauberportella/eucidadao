@@ -11,6 +11,8 @@ Para o cidadão que assinou o sistema os resultados das enquetes irão chegar em
 - Definição dos Serviços e API
 - Fornecimento do cadastro de usuários
 
+## Licença MIT
+
 Copyright (c) 2017 Glauber Portella <glauberportella@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a

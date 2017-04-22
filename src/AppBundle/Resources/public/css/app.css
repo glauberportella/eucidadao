@@ -7,6 +7,10 @@ footer {
 .navbar {
 	margin-bottom: 0;
 }
+
+/**
+ * HOME BANNER
+ */
 .banner {
 	background: transparent url('../images/congresso.jpg') center no-repeat;
 	background-size: cover;
@@ -23,6 +27,26 @@ footer {
 	text-shadow: 1px 1px 2px #222;
 	font-weight: bold;
 }
+
+/**
+ * FORM SIGNUP
+ */
+.inscreva form {
+	background-color: #fff;
+	padding: 20px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	box-shadow: 1px 1px 2px #333;
+	color: #555;
+}
+
 .deputado-foto {
 	border: 3px solid #ddd;
+}
+
+#filtro_deputado .form-control,
+#filtro_proposicao .form-control {
+	margin-left: 5px;
+	margin-right: 5px;
 }

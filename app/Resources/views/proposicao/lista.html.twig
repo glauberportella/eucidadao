@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="page-header">
+		  <h1>Proposições</h1>
+		</div>
+
+		<p class="text-justify">Lista das Proposições.</p>
+
+		<div class="well">
+			<h4 style="margin-top: 0; margin-bottom: 15px;">Filtros</h4>
+			{{ form_start(filtroForm, { 'attr': { 'class': 'form-inline' }}) }}
+				{{ form_widget(filtroForm) }}
+			{{ form_end(filtroForm) }}
+		</div>
+
+		<p class="lead text-center">Total: {{ total }} proposições encontradas.</p>
+
+		{#
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Nome</th>
+					<th>Partido</th>
+					<th>UF</th>
+					<th>Gabinete (anexo - número)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for deputado in deputados %}
+				<tr>
+					<td>
+						<img class="img-responsive deputado-foto" src="{{ deputado.urlFoto }}" alt="">
+					</td>
+					<td>
+						<b>{{ deputado.nome }}</b>
+						<br>Nome Parlamentar: {{ deputado.nomeParlamentar }}
+						<br><em>{{ deputado.condicao }}</em>
+						<br><b>Fone:</b> {{ deputado.fone }}
+						<br><b>E-mail:</b> {{ deputado.email }}
+					</td>
+					<td>{{ deputado.partido }}</td>
+					<td>{{ deputado.uf }}</td>
+					<td>{{ deputado.anexo }} - {{ deputado.gabinete }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		#}
+
+		<hr>
+		<h2>Projetos de Lei de {{ ano }}</h2>
+		<p class="lead text-center">Total: {{ totalAno }} proposições encontradas.</p>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Núm.</th>
+					<th>Nome</th>
+					<th>Ementa</th>
+					<th>Data Apres.</th>
+					<th>Autor</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for proposicao in proposicoesAno %}
+				<tr>
+					<td>{{ proposicao.id }}</td>
+					<td>{{ proposicao.numero }}</td>
+					<td>{{ proposicao.nome }}</td>
+					<td>
+						{{ proposicao.txtEmenta }}
+						<hr>
+						{{ proposicao.txtExplicacaoEmenta }}
+					</td>
+					<td>{{ proposicao.datApresentacao }}</td>
+					<td>{{ proposicao.autor1.txtNomeAutor }} - {{ proposicao.autor1.txtSiglaPartido }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

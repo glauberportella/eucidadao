@@ -1,0 +1,16 @@
+{% use "bootstrap_3_layout.html.twig" %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <div class="alert alert-danger">
+        	<span class="pull-left"><i class="fa fa-exclamation-triangle"></i></span>
+	        <ul class="form-error-list">
+	            {% for error in errors %}
+	                <li>{{ error.message }}</li>
+	            {% endfor %}
+	        </ul>
+    	</div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

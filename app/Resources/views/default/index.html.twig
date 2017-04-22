@@ -8,61 +8,17 @@
                     <div class="inscreva">
                         <h3 class="text-center">Assine o sistema</h3>
                         <p class="lead text-center">Receba relatório de como seu Deputado votará em proposições na Câmara dos Deputados.</p>
-                        <form class="inline-form" action="" method="post" role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="assinar[nome]" placeholder="SEU NOME">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" name="assinar[email]" placeholder="SEU E-MAIL">
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="assinar[celular]" placeholder="SEU CELULAR">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <select name="assinar[estado]" class="form-control">
-                                            <option value="">SELECIONE SEU ESTADI</option>
-                                            <option value="AC">Acre</option>
-                                            <option value="AL">Alagoas</option>
-                                            <option value="AM">Amazonas</option>
-                                            <option value="AP">Amapá</option>
-                                            <option value="BA">Bahia</option>
-                                            <option value="CE">Ceará</option>
-                                            <option value="DF">Distrito Federal</option>
-                                            <option value="ES">Espírito Santo</option>
-                                            <option value="GO">Goiás</option>
-                                            <option value="MA">Maranhão</option>
-                                            <option value="MG" selected="selected">Minas Gerais</option>
-                                            <option value="MS">Mato Grosso do Sul</option>
-                                            <option value="MT">Mato Grosso</option>
-                                            <option value="PA">Pará</option>
-                                            <option value="PB">Paraíba</option>
-                                            <option value="PE">Pernambuco</option>
-                                            <option value="PI">Piauí</option>
-                                            <option value="PR">Paraná</option>
-                                            <option value="RJ">Rio de Janeiro</option>
-                                            <option value="RN">Rio Grande do Norte</option>
-                                            <option value="RO">Rondonia</option>
-                                            <option value="RR">Roraima</option>
-                                            <option value="RS">Rio Grande do Sul</option>
-                                            <option value="SC">Santa Catarina</option>
-                                            <option value="SE">Sergipe</option>
-                                            <option value="SP">São Paulo</option>
-                                            <option value="TO">Tocantins</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+
+                        {% include '_alerta_sistema.twig' %}
+                        {{ form_start(signupForm) }}
+                            {{ form_widget(signupForm) }}
                             <p class="text-center">
                                 <button type="submit" class="btn btn-success btn-lg"><span class="fa fa-check"></span> ASSINAR</button>
                             </p>
-                        </form>
+                        {{ form_end(signupForm) }}
                         <br>
                         <div class="alert alert-info">
-                            <p><b>Os dados fornecidos não são divulgados a terceiros nem utilizados para envio de SPAM</b></p>
+                            <p><b>Os dados fornecidos não são divulgados a terceiros nem utilizados para envio de SPAM</b>. <a href="{{ path('privacidade') }}">Leia nossa Política de Privacidade</a></p>
                         </div>
                     </div>
                 </div>

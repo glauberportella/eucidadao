@@ -133,6 +133,27 @@ class ProposicaoService extends CamaraWebService
 		return $proposicoes;
 	}
 
+	public function obterProposicoesAno($tipo, $ano)
+	{
+		$proposicoes = [];
+
+		$cache = $this->cache->getItem(sprintf('camara.proposicoes.%s_%d', strtolower(trim($tipo)), $ano));
+		if ($cache->isHit()) {
+			return $cache->get();
+		}
+
+		$proposicoes = $this->obterProposicoes([
+			'sigla' => $tipo,
+			'ano' => $ano,
+		]);
+
+		// save to cache
+		$cache->set($proposicoes);
+		$this->cache->save($cache);
+
+		return $proposicoes;
+	}
+
 	public function obterProposicao($tipo, $numero, $ano)
 	{
 		$proposicao = null;
@@ -243,6 +264,11 @@ class ProposicaoService extends CamaraWebService
 	{
 		$siglas = [];
 
+		$cache = $this->cache->getItem('camara.proposicoes.siglas_tipo');
+		if ($cache->isHit()) {
+			return $cache->get();
+		}
+
 		$response = $this->client
 			->setUri(self::PROPOSICOES_ENDPOINT.'/ListarSiglasTipoProposicao')
 			->setMethod(Request::METHOD_GET)
@@ -256,12 +282,23 @@ class ProposicaoService extends CamaraWebService
 		$results = $this->domQuery->queryXpath('/siglas/sigla');
 		foreach ($results as $domEl) {
 			$sigla = new SiglaTipoProposicao();
-			$sigla->tipoSigla = $domEl->getAttribute('tipoSigla');
-			$sigla->descricao = $domEl->getAttribute('descricao');
+			$sigla->tipoSigla = trim($domEl->getAttribute('tipoSigla'));
+			$sigla->descricao = trim($domEl->getAttribute('descricao'));
 			$sigla->ativa = strtolower((string)$domEl->getAttribute('ativa')) == strtolower('True');
 			$sigla->genero = $domEl->getAttribute('genero');
 			$siglas[] = $sigla;
 		}
+
+		usort($siglas, function(SiglaTipoProposicao $a, SiglaTipoProposicao $b) {
+			if ($a->tipoSigla == $b->tipoSigla) {
+				return 0;
+			}
+			return strnatcmp($a->tipoSigla, $b->tipoSigla);
+		});
+
+		// save to cache
+		$cache->set($siglas);
+		$this->cache->save($cache);
 
 		return $siglas;
 	}

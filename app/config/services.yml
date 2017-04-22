@@ -13,4 +13,7 @@ services:
       class: Zend\Dom\Query
     camara_deputado_service:
       class: AppBundle\Camara\Services\DeputadoService
-      arguments: ['@http_client', '@dom_query']
+      arguments: ['@http_client', '@dom_query', '@cache.app']
+    camara_proposicao_service:
+      class: AppBundle\Camara\Services\ProposicaoService
+      arguments: ['@http_client', '@dom_query', '@cache.app']
