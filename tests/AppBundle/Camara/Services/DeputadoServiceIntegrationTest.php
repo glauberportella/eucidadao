@@ -2,21 +2,21 @@
 
 namespace Tests\AppBundle\Camara\Services;
 
-use Zend\Http\Client;
-use Zend\Dom\Query;
-use AppBundle\Camara\Services\DeputadoService;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DeputadoServiceIntegrationTest extends \PHPUnit_Framework_TestCase
+class DeputadoServiceIntegrationTest extends KernelTestCase
 {
 	private $service;
 
 	public function setUp()
 	{
-		$this->service = new DeputadoService(new Client(), new Query());
+		self::bootKernel();
+		$this->service = static::$kernel->getContainer()->get('camara_deputado_service');
 	}
 
 	public function tearDown()
 	{
+		parent::tearDown();
 		$this->service = null;
 	}
 

@@ -8,6 +8,7 @@ $(function() {
 			field.mask(maskBehavior.apply({}, arguments), options);
 		}
 	};
-	 
+
 	$('.phone').mask(maskBehavior, options);
+	$('.date').mask('00/00/0000');
 })

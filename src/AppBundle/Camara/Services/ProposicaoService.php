@@ -314,6 +314,11 @@ class ProposicaoService extends CamaraWebService
 	{
 		$proposicoes = [];
 
+		$cache = $this->cache->getItem('camara.proposicoes.periodo'.str_replace('/', '_', $dtinicio).'-'.str_replace('/', '_', $dtfim));
+		if ($cache->isHit()) {
+			return $cache->get();
+		}
+
 		$response = $this->client
 			->setUri(self::PROPOSICOES_ENDPOINT.'/ListarProposicoesTramitadasNoPeriodo')
 			->setMethod(Request::METHOD_GET)
@@ -329,11 +334,63 @@ class ProposicaoService extends CamaraWebService
 
 		$this->domQuery->setDocumentXml($response->getBody());
 		$results = $this->domQuery->queryXpath('/proposicoes/proposicao');
-		foreach ($results as $result) {
-			$proposicao = $this->obterProposicao($result['tipoProposicao'], $result['numero'], $result['ano']);
+
+		foreach ($results as $domEl) {
+			$proposicao = $this->obterProposicao(
+				$domEl->getElementsByTagName('tipoProposicao')->item(0)->nodeValue,
+				$domEl->getElementsByTagName('numero')->item(0)->nodeValue,
+				$domEl->getElementsByTagName('ano')->item(0)->nodeValue
+			);
 			$proposicoes[] = $proposicao;
 		}
 
+		// save to cache
+		$cache->set($proposicoes);
+		$this->cache->save($cache);
+
 		return $proposicoes;
+	}
+
+	/**
+	 * Retorna datas inicio e fim da próxima semana (contados a partir do dia da chamada ao metodo)
+	 * @return array Array com as chaves 'inicio' e 'fim' contendo objeto DateTime das datas
+	 */
+	public function getPeriodoUtilProximaSemana(\DateTime $dataBase)
+	{
+		$diaSemanaHoje = $dataBase->format('N');
+
+		$diasAdicionar = 1;
+		switch ($diaSemanaHoje) {
+			case 1: // segunda
+				$diasAdicionar = 7;
+				break;
+			case 2: // terca
+				$diasAdicionar = 6;
+				break;
+			case 3: // quarta
+				$diasAdicionar = 5;
+				break;
+			case 4: // quinta
+				$diasAdicionar = 4;
+				break;
+			case 5: // sexta
+				$diasAdicionar = 3;
+				break;
+			case 6: // sabado
+				$diasAdicionar = 2;
+				break;
+			default: // domingo
+				$diasAdicionar = 1;
+		}
+
+		$inicio = new \DateTime($dataBase->format(\DateTime::ISO8601));
+		$inicio->add(new \DateInterval("P{$diasAdicionar}D"));
+		$fim = new \DateTime($inicio->format(\DateTime::ISO8601));
+		$fim->add(new \DateInterval("P4D"));
+
+		return [
+			'inicio' => $inicio,
+			'fim' => $fim,
+		];
 	}
 }

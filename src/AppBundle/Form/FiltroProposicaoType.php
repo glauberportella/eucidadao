@@ -5,7 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FiltroProposicaoType extends AbstractType
@@ -19,25 +19,24 @@ class FiltroProposicaoType extends AbstractType
         $siglas = $proposicaoService->obterSiglasTipoProposicao();
 
         $builder
-            ->add('sigla', ChoiceType::class, [
-                'required' => true,
-                'choices' => $siglas,
-                'choice_label' => function($sigla) {
-                    return sprintf('%s - %s', $sigla->tipoSigla, $sigla->descricao);
-                },
-                'choice_value' => function($sigla) {
-                    if (!$sigla) {
-                        return '';
-                    }
-                    return $sigla->tipoSigla;
-                },
-                'placeholder' => '',
+            ->add('dtinicio', DateType::class, [
+              'label' => 'Data Início',
+              'widget' => 'single_text',
+              'format' => 'dd/MM/yyyy',
+              'required' => true,
+              'attr' => ['class' => 'date'],
             ])
-            ->add('ano', null, ['required' => true])
+            ->add('dtfim', DateType::class, [
+              'label' => 'Data Fim',
+              'widget' => 'single_text',
+              'format' => 'dd/MM/yyyy',
+              'required' => true,
+              'attr' => ['class' => 'date'],
+            ])
             ->add('filtrar', SubmitType::class, ['label' => 'Filtrar', 'attr' => ['class' => 'btn-primary']])
         ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
