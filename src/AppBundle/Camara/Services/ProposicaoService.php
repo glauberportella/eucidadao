@@ -13,15 +13,15 @@ class ProposicaoService extends CamaraWebService
 {
 	/**
 	 * @param  array  $params Array de parametros:
-	 *							Sigla String - Obrigatorio se ParteNomeAutor não for preenchido. Sigla do tipo de proposição 
+	 *							Sigla String - Obrigatorio se ParteNomeAutor não for preenchido. Sigla do tipo de proposição
 	 *							Numero	Int(Opcional)	Numero da proposição
 	 *							Ano	Int(Obrigatorio se ParteNomeAutor não for preenchido)	Ano da proposição
-	 *							datApresentacaoIni	Date(Opcional)	Menor data desejada para a data de apresentação da proposição. 
+	 *							datApresentacaoIni	Date(Opcional)	Menor data desejada para a data de apresentação da proposição.
 	 *						  						Formato: DD/MM/AAAA
-	 *							datApresentacaoFim	Date(Opcional)	Maior data desejada para a data de apresentação da proposição 
+	 *							datApresentacaoFim	Date(Opcional)	Maior data desejada para a data de apresentação da proposição
 	 *												Formato: DD/MM/AAAA
 	 *							IdTipoAutor	Int(Optional)	Identificador do tipo de órgão autor da proposição, como obtido na chamada ao ListarTiposOrgao
-	 *							ParteNomeAutor	String(Optional)	Parte do nome do autor(5 ou + caracteres) da proposição. 
+	 *							ParteNomeAutor	String(Optional)	Parte do nome do autor(5 ou + caracteres) da proposição.
 	 *							SiglaPartidoAutor	String(Optional)	Sigla do partido do autor da proposição
 	 *							SiglaUfAutor	String(Optional)	UF de representação do autor da proposição
 	 *							GeneroAutor	String(Optional)	Gênero do autor<BR>M - Masculino; F - Feminino; Default - Todos
@@ -264,5 +264,39 @@ class ProposicaoService extends CamaraWebService
 		}
 
 		return $siglas;
+	}
+
+	/**
+	 * Obtem proposicoes que tramitarão em um periodo
+	 *
+	 * @param  string $dtinicio String representando data no formato dd/mm/aaaa
+	 * @param  string $dtfim    String representando data no formato dd/mm/aaaa
+	 * @return array
+	 */
+	public function listarProposicoesTramitadasNoPeriodo($dtinicio, $dtfim)
+	{
+		$proposicoes = [];
+
+		$response = $this->client
+			->setUri(self::PROPOSICOES_ENDPOINT.'/ListarProposicoesTramitadasNoPeriodo')
+			->setMethod(Request::METHOD_GET)
+			->setParameterGet([
+				'dtInicio' => $dtinicio,
+				'dtFim' => $dtfim,
+			])
+			->send();
+
+		if ($response->getStatusCode() != Response::STATUS_CODE_200) {
+			throw new \Exception('Response error '.$response->getReasonPhrase());
+		}
+
+		$this->domQuery->setDocumentXml($response->getBody());
+		$results = $this->domQuery->queryXpath('/proposicoes/proposicao');
+		foreach ($results as $result) {
+			$proposicao = $this->obterProposicao($result['tipoProposicao'], $result['numero'], $result['ano']);
+			$proposicoes[] = $proposicao;
+		}
+
+		return $proposicoes;
 	}
 }
